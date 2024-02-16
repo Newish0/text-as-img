@@ -4,7 +4,7 @@ import hljs from "highlight.js";
 import mk from "@vscode/markdown-it-katex";
 import mt from "markdown-it-textual-uml";
 
-import { Result, Style, StyleType } from "@/markdown/types";
+import { Style, StyleType } from "@/markdown/types";
 
 import oneDarkLightCSS from "highlight.js/styles/atom-one-light.min.css?raw";
 

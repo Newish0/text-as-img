@@ -8,7 +8,3 @@ export interface Style {
     content: string;
 }
 
-export type Result = {
-    html: string;
-    postProcess: () => void | Promise<void>;
-};
