@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Test Page</title>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script type="module" src="/src/main.ts"></script>
+
+
+  <input type="file" name="" id="file-in">
+
+  <h1>Rendered HTML</h1>
+  <div id="rendered-html"></div>
+
+  <h1>Rendered Image</h1>
+  <img id="rendered-img"></div>
+
+
+  <script type="module" defer>
+    import { Md, Utils, HtmlToImg } from "./src/main"
+
+
+    const fileInput = document.querySelector("#file-in")
+    const renderedHTML = document.querySelector("#rendered-html")
+    const renderedIMG = document.querySelector("#rendered-img")
+    fileInput.onchange = async (evt) => {
+      const file = evt.target.files[0]
+
+      renderedHTML.innerHTML = `
+        <div>
+          ${Md.getStyles().map(style => Utils.tagFromStyle(style)).join("")}
+          ${Md.parse(await file.text())}  
+        </div>
+      `;
+
+      renderedIMG.src = await HtmlToImg.convert(renderedHTML.innerHTML);
+    }
+  </script>
+</body>
+
+</html>
