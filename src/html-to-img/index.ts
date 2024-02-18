@@ -85,7 +85,7 @@ export const convert = async (
     });
 
     // Cleanup
-    // root.removeChild(iframe);
+    root.removeChild(iframe);
 
     return dataUrl;
 };

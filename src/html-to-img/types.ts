@@ -1,5 +1,4 @@
 export type HTMLToImageOptions = {
-    cssStyles?: string[];
     width?: string;
     margin?: string;
     pixelRatio?: number;
