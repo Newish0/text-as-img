@@ -26,19 +26,20 @@ export const convert = async (
     iframe.src = "about:blank";
 
     // Set the dimensions of the iframe
-    iframe.width = width;
+    iframe.width = "100%";
 
     root.appendChild(iframe);
 
     Object.assign(iframe.style, {
         position: "absolute",
-        width,
+        width: "100%",
         margin: 0,
         padding: 0,
         border: 0,
         fontSize: `100%`,
         font: `inherit`,
         verticalAlign: `baseline`,
+        overflow: "hidden",
     });
 
     const iDoc = iframe.contentDocument;
@@ -63,11 +64,20 @@ export const convert = async (
     // Triggers after MW when finish rendering contents
     if (after) await after(iDoc);
 
-    iDoc.body.style.padding = margin;
-    iDoc.body.style.backgroundColor = "#fff";
+    Object.assign(iDoc.body.style, {
+        padding: margin,
+        backgroundColor: "#fff",
+        width: "fit-content",
+        overflow: "hidden",
+    });
 
     // Ensure full height is visible
     iframe.height = `${iDoc.body.scrollHeight}px`;
+
+    // Ensure full width is visible regardless of user specified width
+    const { width: bWidth, x: bX } = iDoc.body.getBoundingClientRect();
+    iframe.style.width = `max(${width}, ${bWidth + bX}px)`;
+    iframe.width = `max(${width}, ${bWidth + bX}px)`;
 
     const dataUrl = await htmlToImage.toPng(iDoc.body, {
         pixelRatio,
@@ -75,7 +85,7 @@ export const convert = async (
     });
 
     // Cleanup
-    root.removeChild(iframe);
+    // root.removeChild(iframe);
 
     return dataUrl;
 };
