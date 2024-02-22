@@ -22,7 +22,7 @@ export const convert = async (
 
     const iframe = doc.createElement("iframe");
 
-    // Set the source to 'about:blank' initially
+    // Set the source to 'about:blank' initially so we can use page load evt later. 
     iframe.src = "about:blank";
 
     // Set the dimensions of the iframe
